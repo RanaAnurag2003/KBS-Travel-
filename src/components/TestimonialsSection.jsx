@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./TestimonialsSection.css";
 
@@ -37,13 +37,13 @@ export default function TestimonialsSection({ testimonials }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const autoPlayTimer = useRef(null);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % enhancedTestimonials.length);
-  };
+  }, [enhancedTestimonials.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + enhancedTestimonials.length) % enhancedTestimonials.length);
-  };
+  }, [enhancedTestimonials.length]);
 
   // Autoplay functionality
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function TestimonialsSection({ testimonials }) {
     return () => {
       if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
     };
-  }, [isPlaying]);
+  }, [isPlaying, nextSlide]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function TestimonialsSection({ testimonials }) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [nextSlide, prevSlide]);
 
   // Framer Motion Animation Variants
   const containerVariants = {
@@ -176,7 +176,13 @@ export default function TestimonialsSection({ testimonials }) {
                   <div className="card-header-v3">
                     <div className="user-profile-v3">
                       <div className="avatar-wrapper-v3">
-                        <img src={t.avatar} alt={t.name} className="avatar-v3" />
+                        <img
+                          src={t.avatar}
+                          alt={t.name}
+                          className="avatar-v3"
+                          loading="lazy"
+                          decoding="async"
+                        />
                         <div className="verified-badge-v3">
                           <svg viewBox="0 0 20 20" fill="currentColor" style={{ width: "12px", height: "12px" }}>
                             <path fillRule="evenodd" d="M6.267 3.455a.75.75 0 00-.708-.523H4.5a2.5 2.5 0 00-2.5 2.5v1.059a.75.75 0 00.523.708L5.176 8.15a2.5 2.5 0 001.09 2.052l.966.644a2.5 2.5 0 002.772 0l.966-.644a2.5 2.5 0 001.09-2.052l2.653-.956a.75.75 0 00.523-.708V5.432a2.5 2.5 0 00-2.5-2.5h-1.059a.75.75 0 00-.708.523L9.043 5.92a2.5 2.5 0 01-2.086 0L6.267 3.455zM4 12v4.5A1.5 1.5 0 005.5 18h9a1.5 1.5 0 001.5-1.5V12h-2v3.5a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V12H4z" clipRule="evenodd" />

@@ -1,5 +1,6 @@
 // Redesigned premium footer section for KBS Travels
 import React, { useState, useEffect, useRef, memo } from "react";
+import { usePrefersReducedMotion } from "../utils/motionVariants";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   Phone, Mail, MapPin, Clock, ArrowUp,
@@ -160,20 +161,22 @@ const ScrollToTopButton = memo(function ScrollToTopButton() {
 });
 
 const Footer = memo(function Footer({ onNavigate, handleOpenGetQuote }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: prefersReducedMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.08 }
+      transition: { staggerChildren: prefersReducedMotion ? 0 : 0.08 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 0 },
+    hidden: prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.55, ease: "easeOut" }
     }
   };
 

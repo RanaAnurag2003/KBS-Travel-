@@ -1,7 +1,7 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import LazyImage from "./LazyImage";
 
-export default function TourCard({ pkg, onSelect, onGetQuote, isActive, isNew }) {
+const TourCard = memo(function TourCard({ pkg, onSelect, onGetQuote, isActive, isNew }) {
   const cardRef = useRef(null);
 
   const handleCardClick = (e) => {
@@ -82,4 +82,6 @@ export default function TourCard({ pkg, onSelect, onGetQuote, isActive, isNew })
       </div>
     </div>
   );
-}
+});
+
+export default TourCard;

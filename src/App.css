@@ -435,7 +435,7 @@ body.dark-mode .nav-link-active {
 .hero-background-gradient {
   position: absolute;
   inset: 0;
-  background: url('/src/assets/hero.jpg');
+  background: url('/src/assets/hero.webp');
   background-size: cover;
   background-position: center;
   opacity: 0.92;
@@ -3026,7 +3026,7 @@ body.dark-mode .details-card-block.dropdown-card.is-open .dropdown-chevron {
 
 /* Outer wrapper for Inclusions and FAQ */
 .info-sections-wrapper {
-  background: url('./assets/Backgroun-Faq.jpg') center/cover no-repeat;
+  background: url('./assets/Backgroun-Faq.webp') center/cover no-repeat;
   background-attachment: fixed;
   padding: 20px 0;
   margin: 40px 0;

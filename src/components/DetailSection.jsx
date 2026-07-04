@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { sectionVariants, childVariants, viewportSettings, usePrefersReducedMotion } from "../utils/motionVariants";
 
 export default function DetailSection({ pkg }) {
   const [activeTab, setActiveTab] = useState("overview");
+  const reducedMotion = usePrefersReducedMotion();
 
   if (!pkg) {
     return (
@@ -17,10 +20,17 @@ export default function DetailSection({ pkg }) {
   }
 
   return (
-    <section className="details-section fade-in-up" id="overview" key={pkg.id}>
-
+    <motion.section 
+      className="details-section" 
+      id="overview" 
+      key={pkg.id}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={sectionVariants(reducedMotion)}
+    >
       {/* 1. Solid Blue Tabs Bar - Styled like Target UI */}
-      <div className="details-tabs-bar-blue">
+      <motion.div className="details-tabs-bar-blue" variants={childVariants(reducedMotion)}>
         <div className="details-tabs-container-blue">
           <button
             type="button"
@@ -37,26 +47,24 @@ export default function DetailSection({ pkg }) {
             Stay & Transfers
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* 2. Content Grid Layout */}
       <div className="details-layout">
-
         {/* Left Column: Details Cards */}
         <div className="details-main-column">
-
           {/* Message Banner Card */}
-          <div className="details-message-card">
+          <motion.div className="details-message-card" variants={childVariants(reducedMotion)}>
             <span className="details-message-text">
               Showing official package details for: <strong>{pkg.title} ({pkg.duration})</strong>. Enjoy 100% verified hotels.
             </span>
-          </div>
+          </motion.div>
 
           {activeTab === "overview" ? (
-          <div>  
-            <div className="details-tab-content fade-in">
+            <div>  
+              <div className="details-tab-content">
                 {/* Tour Highlights Card */}
-                <div className="details-card-block dropdown-card is-open">
+                <motion.div className="details-card-block dropdown-card is-open" variants={childVariants(reducedMotion)}>
                   <div className="dropdown-header">
                     <h3 className="highlights-title-red">Tour Highlights</h3>
                     <span className="dropdown-chevron">
@@ -82,10 +90,10 @@ export default function DetailSection({ pkg }) {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Inclusions & Exclusions Card */}
-                <div className="details-card-block dropdown-card is-open" id="inclusion">
+                <motion.div className="details-card-block dropdown-card is-open" id="inclusion" variants={childVariants(reducedMotion)}>
                   <div className="dropdown-header">
                     <h3 className="inc-exc-title-red">Inclusions & Exclusions</h3>
                     <span className="dropdown-chevron">
@@ -134,13 +142,13 @@ export default function DetailSection({ pkg }) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           ) : (
-            <div className="details-tab-content fade-in">
+            <div className="details-tab-content">
               {/* Stay & Transfers Card */}
-              <div className="details-card-block">
+              <motion.div className="details-card-block" variants={childVariants(reducedMotion)}>
                 <h3 className="highlights-title-red">Accommodation & Transfer Details</h3>
                 <p className="stay-transfers-intro">{pkg.stayTransfers}</p>
 
@@ -174,11 +182,11 @@ export default function DetailSection({ pkg }) {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           )}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

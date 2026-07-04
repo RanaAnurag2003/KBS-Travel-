@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { sectionVariants, childVariants, viewportSettings, usePrefersReducedMotion } from "../utils/motionVariants";
 import OfferCard from "./OfferCard";
 import "../OfferSection.css";
 
@@ -8,7 +10,7 @@ const offerCardOneSlides = [
     description: "Explore Beaches",
     badge: "40% OFF",
     badgeType: "discount",
-    image: "/src/assets/heron.jpg",
+    image: "/src/assets/heron.webp",
     ctaLabel: "Book Now",
   },
   {
@@ -17,7 +19,7 @@ const offerCardOneSlides = [
     description: "Romantic getaways for couples",
     badge: "Limited Time",
     badgeType: "limited",
-    image: "/src/assets/sunset.jpg",
+    image: "/src/assets/sunset.webp",
     ctaLabel: "View Deals",
   },
   {
@@ -26,7 +28,7 @@ const offerCardOneSlides = [
     description: "Perfect packages for the whole family",
     badge: "NEW",
     badgeType: "new",
-    image: "/src/assets/boats.jpg",
+    image: "/src/assets/boats.webp",
     ctaLabel: "Explore",
   },
 ];
@@ -38,7 +40,7 @@ const offerCardTwoSlides = [
     description: "Quick breaks, big savings",
     badge: "₹3,000 OFF",
     badgeType: "discount",
-    image: "/src/assets/forest.jpg",
+    image: "/src/assets/forest.webp",
     ctaLabel: "Grab Offer",
   },
   {
@@ -47,7 +49,7 @@ const offerCardTwoSlides = [
     description: "Book early and travel smarter",
     badge: "25% OFF",
     badgeType: "discount",
-    image: "/src/assets/hero.jpg",
+    image: "/src/assets/hero.webp",
     ctaLabel: "Book Early",
   },
   {
@@ -56,7 +58,7 @@ const offerCardTwoSlides = [
     description: "Thrills for the bold explorer",
     badge: "Limited Time",
     badgeType: "limited",
-    image: "/src/assets/church.jpg",
+    image: "/src/assets/church.webp",
     ctaLabel: "Start Adventure",
   },
 ];
@@ -68,7 +70,7 @@ const offerCardThreeSlides = [
     description: "Indulge in 5-star experiences",
     badge: "LUXURY",
     badgeType: "default",
-    image: "/src/assets/hero.jpg",
+    image: "/src/assets/hero.webp",
     ctaLabel: "Discover",
   },
   {
@@ -77,7 +79,7 @@ const offerCardThreeSlides = [
     description: "Special discounts for groups of 4+",
     badge: "15% OFF",
     badgeType: "discount",
-    image: "/src/assets/heron.jpg",
+    image: "/src/assets/heron.webp",
     ctaLabel: "Group Deals",
   },
   {
@@ -86,12 +88,14 @@ const offerCardThreeSlides = [
     description: "Guided trekking experiences",
     badge: "POPULAR",
     badgeType: "limited",
-    image: "/src/assets/forest.jpg",
+    image: "/src/assets/forest.webp",
     ctaLabel: "View Treks",
   },
 ];
 
 export default function OfferSection({ onCtaClick }) {
+  const reducedMotion = usePrefersReducedMotion();
+
   const attachCta = (slides) =>
     slides.map((slide) => ({
       ...slide,
@@ -99,25 +103,38 @@ export default function OfferSection({ onCtaClick }) {
     }));
 
   return (
-    <section className="offer-section" aria-label="Promotional offers">
-      <OfferCard
-        title="Seasonal Deals"
-        subtitle="Handpicked travel offers"
-        offers={attachCta(offerCardOneSlides)}
-        ariaLabel="Seasonal and holiday offers carousel"
-      />
-      <OfferCard
-        title="Quick Getaways"
-        subtitle="Limited-time savings"
-        offers={attachCta(offerCardTwoSlides)}
-        ariaLabel="Weekend and adventure offers carousel"
-      />
-      <OfferCard
-        title="Premium Experiences"
-        subtitle="Luxury and group tours"
-        offers={attachCta(offerCardThreeSlides)}
-        ariaLabel="Luxury and group offers carousel"
-      />
-    </section>
+    <motion.section 
+      className="offer-section" 
+      aria-label="Promotional offers"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={sectionVariants(reducedMotion)}
+    >
+      <motion.div variants={childVariants(reducedMotion)}>
+        <OfferCard
+          title="Seasonal Deals"
+          subtitle="Handpicked travel offers"
+          offers={attachCta(offerCardOneSlides)}
+          ariaLabel="Seasonal and holiday offers carousel"
+        />
+      </motion.div>
+      <motion.div variants={childVariants(reducedMotion)}>
+        <OfferCard
+          title="Quick Getaways"
+          subtitle="Limited-time savings"
+          offers={attachCta(offerCardTwoSlides)}
+          ariaLabel="Weekend and adventure offers carousel"
+        />
+      </motion.div>
+      <motion.div variants={childVariants(reducedMotion)}>
+        <OfferCard
+          title="Premium Experiences"
+          subtitle="Luxury and group tours"
+          offers={attachCta(offerCardThreeSlides)}
+          ariaLabel="Luxury and group offers carousel"
+        />
+      </motion.div>
+    </motion.section>
   );
 }

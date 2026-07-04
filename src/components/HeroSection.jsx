@@ -1,13 +1,22 @@
+import { motion } from "framer-motion";
+import { sectionVariants, childVariants, usePrefersReducedMotion } from "../utils/motionVariants";
 import SearchBar from "./SearchBar";
 
 export default function HeroSection({ onSearch }) {
+  const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <section className="hero-section-v2" id="home">
+    <motion.section 
+      className="hero-section-v2" 
+      id="home"
+      initial="hidden"
+      animate="visible"
+      variants={sectionVariants(reducedMotion)}
+    >
       <div className="hero-overlay-v2" />
 
       <div className="hero-content-v2">
-        <div className="hero-right-v2">
+        <motion.div className="hero-right-v2" variants={childVariants(reducedMotion)}>
           {/* Map Illustration Placeholder */}
           <div className="map-illustration-v2">
             {/* SVG Map Path outlines */}
@@ -27,18 +36,18 @@ export default function HeroSection({ onSearch }) {
               <circle cx="750" cy="200" r="4" fill="#67E8F9" className="pulse-dot" />
             </svg>
           </div>
-        </div>
+        </motion.div>
 
         <div className="hero-left-v2">
-          <h1 className="hero-title-v2">
+          <motion.h1 className="hero-title-v2" variants={childVariants(reducedMotion)}>
             Explore Premium with Custom Packages...
-          </h1>
+          </motion.h1>
 
-          <div className="hero-search-wrapper-v2">
+          <motion.div className="hero-search-wrapper-v2" variants={childVariants(reducedMotion)}>
             <SearchBar onSearch={onSearch} />
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

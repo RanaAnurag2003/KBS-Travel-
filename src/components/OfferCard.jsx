@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
+import LazyImage from "./LazyImage";
 
-export default function OfferCard({ title, subtitle, offers = [], ariaLabel }) {
+const OfferCard = memo(function OfferCard({ title, subtitle, offers = [], ariaLabel }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -52,11 +53,10 @@ export default function OfferCard({ title, subtitle, offers = [], ariaLabel }) {
             aria-hidden={index !== activeIndex}
           >
             <div className="offer-slide-bg">
-              <img
+              <LazyImage
                 src={offer.image}
-                alt=""
+                alt={offer.title || ""}
                 className="offer-slide-img"
-                loading="lazy"
               />
             </div>
             <div className="offer-slide-overlay" />
@@ -104,4 +104,6 @@ export default function OfferCard({ title, subtitle, offers = [], ariaLabel }) {
       )}
     </article>
   );
-}
+});
+
+export default OfferCard;

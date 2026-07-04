@@ -8,7 +8,7 @@ const basePackages = [
     reviews: 2534,
     duration: "5D/4N",
     price: 5400,
-    image: "/src/assets/heron.jpg",
+    image: "/src/assets/heron.webp",
     bullets: [
       "Exotic Wildlife",
       "Adventure Activities",
@@ -54,7 +54,7 @@ const basePackages = [
     reviews: 2751,
     duration: "3D/2N",
     price: 8800,
-    image: "/src/assets/church.jpg",
+    image: "/src/assets/church.webp",
     bullets: [
       "Historic Churches",
       "Exotic Wildlife",
@@ -97,7 +97,7 @@ const basePackages = [
     reviews: 826,
     duration: "4D/3N",
     price: 6500,
-    image: "/src/assets/boats.jpg",
+    image: "/src/assets/boats.webp",
     bullets: [
       "Portuguese Heritage",
       "Water Sports",
@@ -140,7 +140,7 @@ const basePackages = [
     reviews: 2002,
     duration: "3D/2N",
     price: 4900,
-    image: "/src/assets/forest.jpg",
+    image: "/src/assets/forest.webp",
     bullets: [
       "Sunset Cruises",
       "Historic Churches",
@@ -187,7 +187,7 @@ const basePackages = [
     reviews: 1450,
     duration: "5D/4N",
     price: 45000,
-    image: "/src/assets/hero.jpg",
+    image: "/src/assets/hero.webp",
     bullets: [
       "Overwater Villa",
       "All-Inclusive Dining",
@@ -229,7 +229,7 @@ const basePackages = [
     reviews: 1890,
     duration: "6D/5N",
     price: 18900,
-    image: "/src/assets/sunset.jpg",
+    image: "/src/assets/sunset.webp",
     bullets: [
       "Dal Lake Houseboat",
       "Shikara Ride",
@@ -272,7 +272,7 @@ const basePackages = [
     reviews: 1205,
     duration: "6D/5N",
     price: 24500,
-    image: "/src/assets/forest.jpg",
+    image: "/src/assets/forest.webp",
     bullets: [
       "Ubud Jungle Villa",
       "Infinity Pool",
@@ -315,7 +315,7 @@ const basePackages = [
     reviews: 955,
     duration: "7D/6N",
     price: 15400,
-    image: "/src/assets/church.jpg",
+    image: "/src/assets/church.webp",
     bullets: [
       "Royal Forts Tour",
       "Camel Desert Safari",
