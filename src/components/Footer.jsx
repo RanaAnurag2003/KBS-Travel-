@@ -130,35 +130,8 @@ const NewsletterForm = memo(function NewsletterForm() {
   );
 });
 
-// Performance-optimized scroll top button sub-component to isolate scroll re-renders
-const ScrollToTopButton = memo(function ScrollToTopButton() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  useEffect(() => {
-    const checkScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
-    };
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    return () => window.removeEventListener("scroll", checkScroll);
-  }, []);
 
-  return (
-    <AnimatePresence>
-      {showScrollTop && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="btn-scroll-top-premium"
-          aria-label="Scroll back to top"
-        >
-          <ArrowUp className="w-4 h-4" />
-        </motion.button>
-      )}
-    </AnimatePresence>
-  );
-});
 
 const Footer = memo(function Footer({ onNavigate, handleOpenGetQuote }) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -335,12 +308,8 @@ const Footer = memo(function Footer({ onNavigate, handleOpenGetQuote }) {
           </div>
         </div>
       </div>
-
-      {/* Floating Scroll Button */}
-      <ScrollToTopButton />
     </footer>
   );
 });
 
 export default Footer;
-

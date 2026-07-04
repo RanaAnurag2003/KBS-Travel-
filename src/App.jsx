@@ -10,6 +10,7 @@ import HeroSection from "./components/HeroSection";
 import SidebarFilters from "./components/SidebarFilters";
 import TourCard from "./components/TourCard";
 import LazyViewportSection from "./components/LazyViewportSection";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 
 // Lazy-loaded components below-the-fold
 const importOfferSection = () => import("./components/OfferSection");
@@ -20,6 +21,7 @@ const importFooter = () => import("./components/Footer");
 const importDetailSection = () => import("./components/DetailSection");
 const importFormModal = () => import("./components/FormModal");
 const importPromoBanner = () => import("./components/PromoBanner");
+const importPromoSlideshowBanner = () => import("./components/PromoSlideshowBanner");
 
 const OfferSection = React.lazy(importOfferSection);
 const WhyBookWithUs = React.lazy(importWhyBookWithUs);
@@ -29,6 +31,7 @@ const Footer = React.lazy(importFooter);
 const DetailSection = React.lazy(importDetailSection);
 const FormModal = React.lazy(importFormModal);
 const PromoBanner = React.lazy(importPromoBanner);
+const PromoSlideshowBanner = React.lazy(importPromoSlideshowBanner);
 
 // Import compressed webp avatars
 import avatarSashank from "./assets/avatar_sashank.webp";
@@ -157,7 +160,8 @@ export default function App() {
       importFooter,
       importFormModal,
       importDetailSection,
-      importPromoBanner
+      importPromoBanner,
+      importPromoSlideshowBanner
     ];
 
     const idleCallback = window.requestIdleCallback || ((cb) => setTimeout(cb, 1200));
@@ -257,7 +261,6 @@ export default function App() {
       safety: []
     });
     setSearchQuery("");
-    setHasSearched(false);
   }, []);
 
   // Modal open handlers
@@ -441,7 +444,11 @@ export default function App() {
                             {(idx === 2 || idx === 5) && (
                               <div style={{ gridColumn: '1 / -1', margin: '4px 0' }}>
                                 <Suspense fallback={null}>
-                                  <PromoBanner onAction={() => handleOpenGetQuote()} />
+                                  {idx === 2 ? (
+                                    <PromoBanner onAction={() => handleOpenGetQuote()} />
+                                  ) : (
+                                    <PromoSlideshowBanner onAction={() => handleOpenGetQuote()} />
+                                  )}
                                 </Suspense>
                               </div>
                             )}
@@ -544,6 +551,9 @@ export default function App() {
           />
         </Suspense>
       )}
+
+      {/* Global Scroll to Top progress wheel */}
+      <ScrollToTopButton />
     </div>
   );
 }

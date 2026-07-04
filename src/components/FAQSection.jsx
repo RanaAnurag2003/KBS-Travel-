@@ -53,6 +53,8 @@ export default function FAQSection() {
                     key={idx} 
                     className={`faq-card glass ${isOpen ? "is-open" : ""}`}
                     variants={childVariants(reducedMotion)}
+                    onMouseEnter={() => setOpenFaqIdx(idx)}
+                    onMouseLeave={() => setOpenFaqIdx(null)}
                   >
                     <button
                       type="button"

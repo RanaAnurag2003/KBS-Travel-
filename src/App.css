@@ -3028,8 +3028,8 @@ body.dark-mode .details-card-block.dropdown-card.is-open .dropdown-chevron {
 .info-sections-wrapper {
   background: url('./assets/Backgroun-Faq.webp') center/cover no-repeat;
   background-attachment: fixed;
-  padding: 20px 0;
-  margin: 40px 0;
+  padding: 20px 0 40px 0;
+  margin: 40px 0 0 0;
 }
 
 /* Why Book Globals panel */
