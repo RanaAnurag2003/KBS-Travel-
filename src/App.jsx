@@ -8,7 +8,6 @@ import SidebarFilters from "./components/SidebarFilters";
 import TourCard from "./components/TourCard";
 import DetailSection from "./components/DetailSection";
 import FormModal from "./components/FormModal";
-import FeaturedDestinationsCarousel from "./components/FeaturedDestinationsCarousel";
 import OfferSection from "./components/OfferSection";
 import PromoBanner from "./components/PromoBanner";
 import Footer from "./components/Footer";
@@ -418,10 +417,11 @@ export default function App() {
             onBookOnline={handleOpenBookOnline}
             onSendInquiry={handleOpenGetQuote}
           />
-
-          <FeaturedDestinationsCarousel />
         </>
       )}
+
+      {/* Testimonials Section */}
+      <TestimonialsSection testimonials={testimonialsList} />
 
       <div className="info-sections-wrapper">
         {/* Global Inclusions Banner (Inclusion Target) */}
@@ -560,8 +560,7 @@ export default function App() {
         </section>
       </div>
 
-      {/* Testimonials Section */}
-      <TestimonialsSection testimonials={testimonialsList} />
+
 
       {/* Redesigned Footer Section */}
       <Footer onNavigate={handleNavigate} handleOpenGetQuote={handleOpenGetQuote} />
