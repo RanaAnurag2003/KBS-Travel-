@@ -40,10 +40,8 @@ export default function FormModal({ isOpen, onClose, modalData }) {
     <div className="modal-overlay glass-heavy fade-in">
       <div className="modal-content-v2 fade-in-up">
         {/* Close Button at top-right of the entire modal */}
-        <button onClick={handleClose} className="modal-close-btn-v2" aria-label="Close Modal">
-          <svg className="close-svg-large" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+        <button className="modal-close-btn-v2" onClick={handleClose} aria-label="Close modal">
+          <svg className="modal-close-icon-v2" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
         
         {/* Left Side: Visuals */}
