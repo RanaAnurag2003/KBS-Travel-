@@ -16,7 +16,7 @@ export default function LazyImage({ src, alt, className = "" }) {
           }
         });
       },
-      { rootMargin: "100px" }
+      { rootMargin: "800px" }
     );
 
     if (currentImg) {

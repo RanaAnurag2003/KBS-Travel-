@@ -86,9 +86,9 @@ export default function PromoSlideshowBanner({ onAction }) {
   // Micro-animation variants for slide children
   const contentVariants = {
     hidden: { opacity: 0, y: 15, scale: 0.98 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
       transition: {
         duration: 0.6,
@@ -97,9 +97,9 @@ export default function PromoSlideshowBanner({ onAction }) {
         delayChildren: 0.05
       }
     },
-    exit: { 
-      opacity: 0, 
-      y: -15, 
+    exit: {
+      opacity: 0,
+      y: -15,
       scale: 0.98,
       transition: {
         duration: 0.5,
@@ -121,12 +121,11 @@ export default function PromoSlideshowBanner({ onAction }) {
   };
 
   return (
-    <div 
+    <div
       className="promo-banner-card promo-slideshow-container"
-      style={{ 
+      style={{
         background: activeSlide.gradient,
-        transition: "background 0.8s ease-in-out",
-        paddingBottom: "36px"
+        transition: "background 0.8s ease-in-out"
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -135,6 +134,10 @@ export default function PromoSlideshowBanner({ onAction }) {
       <style>{`
         .promo-slideshow-container {
           position: relative;
+          height: 100px !important;
+          min-height: 100px !important;
+          max-height: 100px !important;
+          box-sizing: border-box !important;
         }
         .promo-slideshow-inner {
           display: flex;
@@ -143,6 +146,7 @@ export default function PromoSlideshowBanner({ onAction }) {
           gap: 20px;
           z-index: 2;
           position: relative;
+          height: 100% !important;
         }
         .promo-slideshow-left {
           display: flex;
@@ -214,22 +218,66 @@ export default function PromoSlideshowBanner({ onAction }) {
           background: #ffffff;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+          .promo-slideshow-container {
+            border-radius: 20px !important;
+            padding: 16px !important;
+            height: 185px !important;
+            min-height: 185px !important;
+            max-height: 185px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
+          }
           .promo-slideshow-inner {
             flex-direction: column;
             align-items: stretch;
             text-align: center;
-            gap: 16px;
+            gap: 10px;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            height: 100% !important;
+            justify-content: center !important;
           }
           .promo-slideshow-left {
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            width: 100% !important;
+          }
+          .promo-slideshow-icon {
+            width: 34px;
+            height: 34px;
+          }
+          .promo-slideshow-title {
+            font-size: 13px;
+            line-height: 1.35;
+          }
+          .promo-slideshow-subtitle {
+            font-size: 11px;
+            line-height: 1.3;
+            margin-top: 2px !important;
           }
           .promo-slideshow-btn {
             align-self: center;
             width: 100%;
-            max-width: 200px;
+            max-width: none;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 750;
+            border-radius: 12px;
+            background: transparent !important;
+            border: none !important;
+            color: #ffffff !important;
+            box-shadow: none !important;
+          }
+          .promo-slideshow-btn:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            transform: translateY(-1px) !important;
+          }
+          .promo-slideshow-indicators {
+            bottom: 8px;
           }
         }
       `}</style>

@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function FormModal({ isOpen, onClose, modalData }) {
   const [name, setName] = useState(modalData?.name || "");
   const [phone, setPhone] = useState(modalData?.phone || "");
   const [selectedTag, setSelectedTag] = useState("SOLO");
   const [submitted, setSubmitted] = useState(false);
+
+  // Lock background scroll on mobile when open
+  useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    if (isOpen && isMobile) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -27,6 +39,12 @@ export default function FormModal({ isOpen, onClose, modalData }) {
   return (
     <div className="modal-overlay glass-heavy fade-in">
       <div className="modal-content-v2 fade-in-up">
+        {/* Close Button at top-right of the entire modal */}
+        <button onClick={handleClose} className="modal-close-btn-v2" aria-label="Close Modal">
+          <svg className="close-svg-large" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
         
         {/* Left Side: Visuals */}
         <div className="modal-left-col">
@@ -63,13 +81,7 @@ export default function FormModal({ isOpen, onClose, modalData }) {
         </div>
         </div>
 
-        {/* Right Side: Form */}
         <div className="modal-right-col">
-          <button onClick={handleClose} className="modal-close-btn-v2" aria-label="Close Modal">
-            <svg className="close-svg-large" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
           
           {!submitted ? (
             <div className="modal-form-container">

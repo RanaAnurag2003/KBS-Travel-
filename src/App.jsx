@@ -11,6 +11,7 @@ import SidebarFilters from "./components/SidebarFilters";
 import TourCard from "./components/TourCard";
 import LazyViewportSection from "./components/LazyViewportSection";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import MobileCTA from "./components/MobileCTA";
 
 // Lazy-loaded components below-the-fold
 const importOfferSection = () => import("./components/OfferSection");
@@ -39,6 +40,57 @@ import avatarAysha from "./assets/avatar_aysha.webp";
 import avatarRitika from "./assets/avatar_ritika.webp";
 
 const ITEMS_PER_PAGE = 9;
+
+// Icons shown only in the mobile category card grid (hidden on desktop via CSS)
+const categoryIcons = {
+  All: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  ),
+  Honeymoon: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 20.727c-.4 0-.8-.15-1.1-.44L3.9 13.24c-2.1-2.1-2.1-5.5 0-7.6 2-2.02 5.28-2.06 7.33-.1l.77.73.77-.73c2.05-1.96 5.33-1.92 7.33.1 2.1 2.1 2.1 5.5 0 7.6l-7 7.05c-.3.29-.7.44-1.1.44z"
+      />
+    </svg>
+  ),
+  Beach: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 21c4-2 14-2 18 0M12 3c2 3 2 7-1 10M8 13c2-1 6-1 9 1M5 17c1-3 4-5 7-5"
+      />
+    </svg>
+  ),
+  Adventure: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 20l6-11 4 7 3-5 5 9H3z" />
+    </svg>
+  ),
+  Weekend: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path strokeLinecap="round" d="M16 3v4M8 3v4M3 10h18" />
+    </svg>
+  ),
+  Group: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="9" cy="8" r="3" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2 20c0-3 3-5 7-5s7 2 7 5M16 8a3 3 0 100-6M17 12c2.5.3 5 1.8 5 5"
+      />
+    </svg>
+  )
+};
 
 const testimonialsList = [
   {
@@ -111,12 +163,13 @@ export default function App() {
     }
 
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08,
+      wheelMultiplier: 1.05,
       smoothWheel: true,
       touchMultiplier: 1.5,
+      infinite: false,
     });
-    
+
     lenisRef.current = lenis;
 
     let rafId;
@@ -165,7 +218,7 @@ export default function App() {
     ];
 
     const idleCallback = window.requestIdleCallback || ((cb) => setTimeout(cb, 1200));
-    
+
     let index = 0;
     const schedulePrefetch = () => {
       if (index < prefetchList.length) {
@@ -176,7 +229,7 @@ export default function App() {
         });
       }
     };
-    
+
     // Start prefetching 2 seconds after the page mounts
     const timer = setTimeout(schedulePrefetch, 2000);
     return () => clearTimeout(timer);
@@ -297,6 +350,20 @@ export default function App() {
     setIsModalOpen(true);
   }, []);
 
+  // Lightweight search triggered from the Header's mobile search bar.
+  // Unlike handleSearch (used by the hero SearchBar), this doesn't open the
+  // enquiry modal - it just filters packages by the typed query and scrolls
+  // the user straight to the results.
+  const handleHeaderSearch = useCallback((query) => {
+    setSearchQuery(query);
+    setHasSearched(true);
+    setCurrentPage(1);
+
+    setTimeout(() => {
+      handleNavigate("packages");
+    }, 100);
+  }, [handleNavigate]);
+
   const handleSearch = useCallback((searchData) => {
     console.log("Search with:", searchData);
     setSearchQuery(searchData.toDestination || searchData.fromCity);
@@ -308,6 +375,16 @@ export default function App() {
       handleNavigate("packages");
     }, 100);
   }, [handleOpenSearchBarQuote, handleNavigate]);
+
+  const handleSelectPackage = useCallback((id) => {
+    setActivePackageId(id);
+    handleNavigate("overview");
+  }, [handleNavigate]);
+
+  const handleFilterChange = useCallback((newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
+  }, []);
 
   // Filter package data - Memoized to prevent heavy recalculation on theme toggle or scrolling
   const filteredPackages = useMemo(() => {
@@ -365,6 +442,7 @@ export default function App() {
       <Header
         currentSection={currentSection}
         onNavigate={handleNavigate}
+        onSearch={handleHeaderSearch}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
       />
@@ -391,7 +469,12 @@ export default function App() {
 
               {/* Section Heading & Category Tabs */}
               <div className="packages-header-block" id="packages">
-                <h2 className="section-title">Showing Tours packages & itinerary</h2>
+                <h2 className="section-title desktop-section-title">Showing Tours packages & itinerary</h2>
+
+                <div className="mobile-section-heading">
+                  <h2 className="mobile-section-title">Explore Tours &amp; Itineraries</h2>
+                  <p className="mobile-section-subtitle">Find the perfect experience for your next journey</p>
+                </div>
 
                 <div className="category-tabs-bar">
                   {["All", "Honeymoon", "Beach", "Adventure", "Weekend", "Group"].map((cat) => (
@@ -404,7 +487,10 @@ export default function App() {
                       className={`category-tab-pill ${selectedCategory === cat ? "category-tab-pill-active" : ""
                         } cursor-pointer`}
                     >
-                      {cat}
+                      <span className="category-tab-icon" aria-hidden="true">
+                        {categoryIcons[cat]}
+                      </span>
+                      <span className="category-tab-label">{cat}</span>
                     </button>
                   ))}
                 </div>
@@ -415,10 +501,7 @@ export default function App() {
                 {/* Sidebar Filters */}
                 <SidebarFilters
                   filters={filters}
-                  onFilterChange={(newFilters) => {
-                    setFilters(newFilters);
-                    setCurrentPage(1);
-                  }}
+                  onFilterChange={handleFilterChange}
                   onClearAll={handleClearAll}
                   filteredCount={filteredPackages.length}
                 />
@@ -434,10 +517,7 @@ export default function App() {
                               pkg={pkg}
                               isNew={idx < 3}
                               isActive={pkg.id === activePackageId}
-                              onSelect={(id) => {
-                                setActivePackageId(id);
-                                handleNavigate("overview");
-                              }}
+                              onSelect={handleSelectPackage}
                               onGetQuote={handleOpenGetQuote}
                             />
                             {/* PromoBanner between each row */}
@@ -445,9 +525,9 @@ export default function App() {
                               <div style={{ gridColumn: '1 / -1', margin: '4px 0' }}>
                                 <Suspense fallback={null}>
                                   {idx === 2 ? (
-                                    <PromoBanner onAction={() => handleOpenGetQuote()} />
+                                    <PromoBanner onAction={handleOpenGetQuote} />
                                   ) : (
-                                    <PromoSlideshowBanner onAction={() => handleOpenGetQuote()} />
+                                    <PromoSlideshowBanner onAction={handleOpenGetQuote} />
                                   )}
                                 </Suspense>
                               </div>
@@ -551,6 +631,9 @@ export default function App() {
           />
         </Suspense>
       )}
+
+      {/* Mobile Bottom CTA Bar */}
+      <MobileCTA isModalOpen={isModalOpen} />
 
       {/* Global Scroll to Top progress wheel */}
       <ScrollToTopButton />

@@ -1,36 +1,56 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { ArrowUp } from "lucide-react";
 
 export const ScrollToTopButton = memo(function ScrollToTopButton() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const btnRef = useRef(null);
+  const circleRef = useRef(null);
+  const circumference = 2 * Math.PI * 21; // ~131.95
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight <= 0) {
-        setScrollProgress(0);
-        return;
+      let progress = 0;
+      
+      if (totalHeight > 0) {
+        progress = (window.scrollY / totalHeight) * 100;
       }
-      const progress = (window.scrollY / totalHeight) * 100;
-      setScrollProgress(progress);
+      
+      const offset = circumference - (progress / 100) * circumference;
+      
+      if (circleRef.current) {
+        circleRef.current.style.strokeDashoffset = offset;
+      }
+      
+      if (btnRef.current) {
+        btnRef.current.style.opacity = progress > 1 ? 1 : 0.35;
+      }
+      
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    updateScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const circumference = 2 * Math.PI * 21; // ~131.95
-  const strokeDashoffset = circumference - (scrollProgress / 100) * circumference;
+  }, [circumference]);
 
   return (
     <button
+      ref={btnRef}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="btn-scroll-top-premium"
       aria-label="Scroll back to top"
       style={{
-        opacity: scrollProgress > 1 ? 1 : 0.35,
+        opacity: 0.35,
         pointerEvents: "auto",
         transition: "opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease",
       }}
@@ -57,6 +77,7 @@ export const ScrollToTopButton = memo(function ScrollToTopButton() {
           strokeWidth="2"
         />
         <circle
+          ref={circleRef}
           cx="23"
           cy="23"
           r="21"
@@ -64,7 +85,7 @@ export const ScrollToTopButton = memo(function ScrollToTopButton() {
           stroke="#06b6d4"
           strokeWidth="2.5"
           strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          strokeDashoffset={circumference}
           strokeLinecap="round"
           style={{
             transform: "rotate(-90deg)",

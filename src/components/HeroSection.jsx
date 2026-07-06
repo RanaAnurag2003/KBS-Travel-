@@ -6,8 +6,8 @@ export default function HeroSection({ onSearch }) {
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <motion.section 
-      className="hero-section-v2" 
+    <motion.section
+      className="hero-section-v2"
       id="home"
       initial="hidden"
       animate="visible"
@@ -40,11 +40,21 @@ export default function HeroSection({ onSearch }) {
 
         <div className="hero-left-v2">
           <motion.h1 className="hero-title-v2" variants={childVariants(reducedMotion)}>
-            Explore Premium with Custom Packages...
+            Explore Premium <br className="mobile-only-br" />with Custom Packages
           </motion.h1>
+
+          <motion.p className="hero-subtitle-v2" variants={childVariants(reducedMotion)}>
+            Book your dream holiday with verified itineraries and custom stays
+          </motion.p>
 
           <motion.div className="hero-search-wrapper-v2" variants={childVariants(reducedMotion)}>
             <SearchBar onSearch={onSearch} />
+          </motion.div>
+
+          <motion.div className="hero-trust-badges-v2" variants={childVariants(reducedMotion)}>
+            <span className="trust-badge-v2"><span className="checkmark-v2">✓</span> Best Price</span>
+            <span className="trust-badge-v2"><span className="checkmark-v2">✓</span> 24/7 Support</span>
+            <span className="trust-badge-v2"><span className="checkmark-v2">✓</span> Trusted Travel</span>
           </motion.div>
         </div>
       </div>

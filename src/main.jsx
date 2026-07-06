@@ -10,7 +10,8 @@ function Root() {
   useEffect(() => {
     // Check if the loader has already played in this session
     const hasPlayed = sessionStorage.getItem("kbs_loader_played");
-    if (!hasPlayed) {
+    const isMobile = window.innerWidth <= 1024;
+    if (!hasPlayed && !isMobile) {
       setLoaderActive(true);
     }
   }, []);

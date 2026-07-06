@@ -325,6 +325,7 @@
     margin-bottom: 20px;
     margin-top: 10px;
     padding: 0 24px;
+    display: none;
   }
 
   .offer-card {

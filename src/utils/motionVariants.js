@@ -4,12 +4,14 @@ export const smoothEase = [0.25, 1, 0.5, 1];
 // Reusable viewport threshold settings
 export const viewportSettings = {
   once: true,
-  margin: "-100px 0px -100px 0px"
+  margin: "50px 0px 50px 0px"
 };
+
+const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
 // Section transition variant
 export const sectionVariants = (prefersReducedMotion = false) => ({
-  hidden: prefersReducedMotion ? {
+  hidden: (prefersReducedMotion || isMobile) ? {
     opacity: 1,
     y: 0
   } : {
@@ -30,7 +32,7 @@ export const sectionVariants = (prefersReducedMotion = false) => ({
 
 // Staggered child transition variant
 export const childVariants = (prefersReducedMotion = false) => ({
-  hidden: prefersReducedMotion ? {
+  hidden: (prefersReducedMotion || isMobile) ? {
     opacity: 1,
     y: 0
   } : {
@@ -49,7 +51,7 @@ export const childVariants = (prefersReducedMotion = false) => ({
 
 // Image entrance variant: fade in + scale 0.98 to 1 + blur 4px to 0px (sharpening)
 export const imageVariants = (prefersReducedMotion = false) => ({
-  hidden: prefersReducedMotion ? {
+  hidden: (prefersReducedMotion || isMobile) ? {
     opacity: 1,
     scale: 1,
     filter: "blur(0px)"
@@ -71,7 +73,7 @@ export const imageVariants = (prefersReducedMotion = false) => ({
 
 // Heading text clip reveal (lightweight mask)
 export const headingVariants = (prefersReducedMotion = false) => ({
-  hidden: prefersReducedMotion ? {
+  hidden: (prefersReducedMotion || isMobile) ? {
     opacity: 1,
     y: 0
   } : {
@@ -97,10 +99,10 @@ export function usePrefersReducedMotion() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mediaQuery.matches);
-    
+
     const listener = (e) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", listener);
-    
+
     return () => {
       mediaQuery.removeEventListener("change", listener);
     };

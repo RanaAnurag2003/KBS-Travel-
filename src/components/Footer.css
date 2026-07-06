@@ -575,3 +575,9 @@
     transform: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  .btn-scroll-top-premium {
+    display: none !important;
+  }
+}

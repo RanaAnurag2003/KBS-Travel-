@@ -157,7 +157,8 @@ export default function TestimonialsSection({ testimonials }) {
                   variants={cardVariants}
                   className={cardClass}
                   style={{
-                    width: "340px",
+                    width: "100%",
+                    maxWidth: "340px",
                     cursor: "pointer"
                   }}
                   animate={{

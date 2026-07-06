@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function LazyViewportSection({ children, height = "200px", rootMargin = "300px", id }) {
+export default function LazyViewportSection({ children, height = "200px", rootMargin = "1200px", id }) {
   const [hasEntered, setHasEntered] = useState(false);
   const containerRef = useRef(null);
 

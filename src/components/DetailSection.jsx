@@ -20,9 +20,9 @@ export default function DetailSection({ pkg }) {
   }
 
   return (
-    <motion.section 
-      className="details-section" 
-      id="overview" 
+    <motion.section
+      className="details-section"
+      id="overview"
       key={pkg.id}
       initial="hidden"
       whileInView="visible"
@@ -60,8 +60,13 @@ export default function DetailSection({ pkg }) {
             </span>
           </motion.div>
 
-          {activeTab === "overview" ? (
-            <div>  
+          <motion.div
+            key={activeTab}
+            initial="hidden"
+            animate="visible"
+            variants={sectionVariants(reducedMotion)}
+          >
+            {activeTab === "overview" ? (
               <div className="details-tab-content">
                 {/* Tour Highlights Card */}
                 <motion.div className="details-card-block dropdown-card is-open" variants={childVariants(reducedMotion)}>
@@ -144,47 +149,47 @@ export default function DetailSection({ pkg }) {
                   </div>
                 </motion.div>
               </div>
-            </div>
-          ) : (
-            <div className="details-tab-content">
-              {/* Stay & Transfers Card */}
-              <motion.div className="details-card-block" variants={childVariants(reducedMotion)}>
-                <h3 className="highlights-title-red">Accommodation & Transfer Details</h3>
-                <p className="stay-transfers-intro">{pkg.stayTransfers}</p>
+            ) : (
+              <div className="details-tab-content">
+                {/* Stay & Transfers Card */}
+                <motion.div className="details-card-block" variants={childVariants(reducedMotion)}>
+                  <h3 className="highlights-title-red">Accommodation & Transfer Details</h3>
+                  <p className="stay-transfers-intro">{pkg.stayTransfers}</p>
 
-                <div className="stay-details-grid">
-                  <div className="stay-details-card glass">
-                    <div className="stay-details-header">
-                      <svg className="stay-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                      <span className="stay-details-title">Verified Resort Stay</span>
+                  <div className="stay-details-grid">
+                    <div className="stay-details-card glass">
+                      <div className="stay-details-header">
+                        <svg className="stay-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span className="stay-details-title">Verified Resort Stay</span>
+                      </div>
+                      <ul className="stay-details-list">
+                        <li>Room Type: Premium AC Room / Deluxe Cottage</li>
+                        <li>Wi-Fi: Complimentary High Speed Internet</li>
+                        <li>Meal Schedule: Daily buffet meals as per chosen card option</li>
+                        <li>Amenities: Swimming pool, 24/7 reception desk, luggage lockers</li>
+                      </ul>
                     </div>
-                    <ul className="stay-details-list">
-                      <li>Room Type: Premium AC Room / Deluxe Cottage</li>
-                      <li>Wi-Fi: Complimentary High Speed Internet</li>
-                      <li>Meal Schedule: Daily buffet meals as per chosen card option</li>
-                      <li>Amenities: Swimming pool, 24/7 reception desk, luggage lockers</li>
-                    </ul>
-                  </div>
 
-                  <div className="stay-details-card glass">
-                    <div className="stay-details-header">
-                      <svg className="stay-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                      </svg>
-                      <span className="stay-details-title">Dedicated Transport Services</span>
+                    <div className="stay-details-card glass">
+                      <div className="stay-details-header">
+                        <svg className="stay-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                        <span className="stay-details-title">Dedicated Transport Services</span>
+                      </div>
+                      <ul className="stay-details-list">
+                        <li>Airport Pick & Drop: Private Air-conditioned Sedan / SUV</li>
+                        <li>Sightseeing Transport: Daily coach tours / Private car schedules</li>
+                        <li>Driver Allowances: Included (covering parking fees, tolls, fuel surcharge)</li>
+                      </ul>
                     </div>
-                    <ul className="stay-details-list">
-                      <li>Airport Pick & Drop: Private Air-conditioned Sedan / SUV</li>
-                      <li>Sightseeing Transport: Daily coach tours / Private car schedules</li>
-                      <li>Driver Allowances: Included (covering parking fees, tolls, fuel surcharge)</li>
-                    </ul>
                   </div>
-                </div>
-              </motion.div>
-            </div>
-          )}
+                </motion.div>
+              </div>
+            )}
+          </motion.div>
         </div>
       </div>
     </motion.section>

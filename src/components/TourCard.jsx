@@ -1,8 +1,9 @@
-import { useRef, memo } from "react";
+import { useRef, useState, memo } from "react";
 import LazyImage from "./LazyImage";
 
 const TourCard = memo(function TourCard({ pkg, onSelect, onGetQuote, isActive, isNew }) {
   const cardRef = useRef(null);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleCardClick = (e) => {
     // Prevent selection if clicking within the footer area
@@ -30,6 +31,26 @@ const TourCard = memo(function TourCard({ pkg, onSelect, onGetQuote, isActive, i
       <div className="tcv-img-wrapper">
         <LazyImage src={pkg.image} alt={pkg.title} />
         {isNew && <span className="tcv-badge tcv-badge-best">New</span>}
+        <button
+          type="button"
+          className="tcv-wishlist-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsWishlisted((prev) => !prev);
+          }}
+          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          aria-pressed={isWishlisted}
+        >
+          <svg
+            className="tcv-wishlist-icon"
+            viewBox="0 0 24 24"
+            fill={isWishlisted ? "#dc2626" : "none"}
+            stroke={isWishlisted ? "#dc2626" : "currentColor"}
+            strokeWidth="2"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.727c-.4 0-.8-.15-1.1-.44L3.9 13.24c-2.1-2.1-2.1-5.5 0-7.6 2-2.02 5.28-2.06 7.33-.1l.77.73.77-.73c2.05-1.96 5.33-1.92 7.33.1 2.1 2.1 2.1 5.5 0 7.6l-7 7.05c-.3.29-.7.44-1.1.44z" />
+          </svg>
+        </button>
       </div>
 
       <div className="tcv-body">
