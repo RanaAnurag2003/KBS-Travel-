@@ -3611,6 +3611,29 @@ body.dark-mode .details-card-block.dropdown-card.is-open .dropdown-chevron {
   color: #0f172a;
 }
 
+@media (min-width: 1024px) {
+  .modal-close-btn-v2 {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    color: #94a3b8 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    z-index: 1000 !important;
+  }
+  .modal-close-btn-v2:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+}
+
 .close-svg-large {
   width: 32px;
   height: 32px;

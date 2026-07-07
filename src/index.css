@@ -297,3 +297,17 @@ body.dark-mode .shimmer {
 .micro-scale:active {
   transform: scale(0.98);
 }
+
+/* App loading/fade states */
+.app-container-wrapper {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-container-wrapper.content-fade-in {
+  opacity: 1;
+  visibility: visible;
+}

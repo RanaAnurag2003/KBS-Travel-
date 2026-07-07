@@ -18,6 +18,21 @@ export default function FormModal({ isOpen, onClose, modalData }) {
     }
   }, [isOpen]);
 
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
@@ -77,9 +92,9 @@ export default function FormModal({ isOpen, onClose, modalData }) {
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div className="modal-right-col">
+      <div className="modal-right-col">
           
           {!submitted ? (
             <div className="modal-form-container">
