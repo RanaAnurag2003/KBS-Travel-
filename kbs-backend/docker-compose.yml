@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: kbs-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: kbs_travels
+      MYSQL_USER: kbs_user
+      MYSQL_PASSWORD: kbs_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - kbs_mysql_data_v2:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: kbs-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: kbs_user
+      PMA_PASSWORD: kbs_password
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  kbs_mysql_data_v2:

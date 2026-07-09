@@ -1,0 +1,126 @@
+/* Mobile CTA Bar Styles */
+.mobile-cta-wrapper {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-cta-wrapper {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-cta-wrapper.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobile-cta-container {
+    display: flex;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .mobile-cta-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 50px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .mobile-cta-btn:active {
+    transform: scale(0.95) !important;
+    filter: brightness(0.95);
+  }
+
+  @keyframes ctaShimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .mobile-cta-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 50%, #25D366 100%) !important;
+    background-size: 200% auto !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35) !important;
+    animation: ctaShimmer 4s infinite linear !important;
+  }
+
+  .mobile-cta-call {
+    background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #0ea5e9 100%) !important;
+    background-size: 200% auto !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35) !important;
+    animation: ctaShimmer 4s infinite linear !important;
+  }
+
+  .mobile-cta-btn svg {
+    flex-shrink: 0;
+  }
+
+  .mobile-cta-scroll-btn {
+    position: relative;
+    flex: 0 0 46px !important;
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 50% !important;
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    overflow: hidden;
+  }
+
+  .mobile-cta-scroll-btn:active {
+    transform: scale(0.9) !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+  }
+
+  .mobile-cta-scroll-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+}

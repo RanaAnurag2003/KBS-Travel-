@@ -1,0 +1,642 @@
+/* kbs-frontend/src/pages/Dashboard.css */
+
+/* ============================================================
+   Premium Dark Luxury Theme — matches the Admin Login page
+   ============================================================ */
+
+.dashboard-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #0b0b0b;
+  color: #f8fafc;
+  padding: 40px 24px 64px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Subtle noise texture, matching the login screen */
+.dashboard-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 0;
+}
+
+/* Soft vignette */
+.dashboard-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.55) 100%);
+  z-index: 0;
+}
+
+.dashboard-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: dash-fade-in 0.5s ease both;
+}
+
+@keyframes dash-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------
+   Decorative travel-outline illustrations (background layer)
+   ------------------------------------------------------------ */
+.dashboard-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dash-deco-icon {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.14);
+}
+
+.dash-deco-compass {
+  top: 8%;
+  left: 4%;
+  width: 110px;
+  height: 110px;
+}
+
+.dash-deco-plane-top {
+  top: 6%;
+  right: 6%;
+  width: 90px;
+  height: 90px;
+  transform: rotate(35deg);
+}
+
+.dash-deco-plane-bottom {
+  bottom: 6%;
+  left: 5%;
+  width: 90px;
+  height: 90px;
+  transform: rotate(-125deg);
+}
+
+.dash-deco-globe {
+  bottom: 6%;
+  right: 5%;
+  width: 100px;
+  height: 100px;
+}
+
+.dash-deco-star {
+  top: 34%;
+  right: 12%;
+  width: 22px;
+  height: 22px;
+  color: rgba(255, 106, 0, 0.18);
+}
+
+.dash-deco-flightpath {
+  top: 40%;
+  left: 8%;
+  width: 220px;
+  height: 120px;
+}
+
+.dash-deco-luggage {
+  bottom: 22%;
+  right: 20%;
+  width: 46px;
+  height: 46px;
+}
+
+@media (max-width: 1100px) {
+  .dash-deco-icon {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   Generic premium glass card (used for stat cards etc.)
+   ------------------------------------------------------------ */
+.stitched-panel {
+  background: rgba(35, 35, 35, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.stitched-panel:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 106, 0, 0.45);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 106, 0, 0.12), 0 0 28px rgba(255, 106, 0, 0.18);
+}
+
+/* ------------------------------------------------------------
+   Top header / control bar
+   ------------------------------------------------------------ */
+.dashboard-header {
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 32px;
+  position: sticky;
+  top: 16px;
+  z-index: 50;
+}
+
+.brand-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff6a00, #ff3d00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
+}
+
+.dashboard-btn-danger {
+  background: rgba(255, 82, 82, 0.08);
+  border: 1px solid rgba(255, 82, 82, 0.25);
+  color: #ff8a8a;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.dashboard-btn-danger:hover {
+  background: rgba(255, 82, 82, 0.16);
+  border-color: rgba(255, 82, 82, 0.45);
+  color: #ffb3b3;
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------
+   Stats Cards Grid — unified charcoal + orange glow theme
+   ------------------------------------------------------------ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card-total-packages,
+.card-active-offers,
+.card-visual-editing {
+  background: linear-gradient(160deg, rgba(43, 43, 43, 0.95), rgba(26, 26, 26, 0.95));
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.card-total-packages h3,
+.card-active-offers h3 {
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin: 2px 0;
+}
+
+.card-visual-editing h3 {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 300;
+  margin: 2px 0;
+}
+
+.card-total-packages p,
+.card-active-offers p,
+.card-visual-editing p {
+  color: #b5b5b5;
+}
+
+.card-total-packages .stat-label,
+.card-active-offers .stat-label,
+.card-visual-editing .stat-label {
+  color: #ff9d52;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+/* Stat Card Layout helpers */
+.stat-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.stat-card-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.stat-icon-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #1c1c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 106, 0, 0.25);
+}
+
+.stitched-panel:hover .stat-card-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+/* ------------------------------------------------------------
+   Quick Launch / Visual Editor Banner
+   ------------------------------------------------------------ */
+.launch-editor-banner {
+  background: linear-gradient(160deg, rgba(43, 43, 43, 0.95), rgba(20, 20, 20, 0.97));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.launch-editor-content {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.launch-editor-list {
+  margin: 10px 0 0 0;
+  padding: 0 0 0 18px;
+  max-width: 620px;
+  list-style: disc;
+}
+
+.launch-editor-list li {
+  font-size: 13px;
+  color: #b5b5b5;
+  line-height: 1.65;
+  margin-bottom: 4px;
+}
+
+.launch-editor-list li::marker {
+  color: #ff8a3d;
+}
+
+.launch-editor-banner:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 106, 0, 0.45);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 28px rgba(255, 106, 0, 0.18);
+}
+
+.launch-editor-btn {
+  background: linear-gradient(90deg, #ff6a00 0%, #ff3d00 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #fff;
+  padding: 12px 22px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 22px rgba(255, 106, 0, 0.3);
+  transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.launch-editor-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(255, 106, 0, 0.4);
+}
+
+/* ------------------------------------------------------------
+   Excel Import + History panels
+   ------------------------------------------------------------ */
+.import-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 600px;
+  gap: 32px;
+  align-items: stretch;
+}
+
+@media (max-width: 980px) {
+  .import-section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.upload-card-panel,
+.history-card-panel {
+  background: rgba(35, 35, 35, 0.9);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header style inside bottom logs card */
+.history-metallic-header {
+  background: rgba(24, 24, 24, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #f8fafc;
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+}
+
+.history-metallic-header h3 {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Make any buttons inside the metallic header visible against the dark bg,
+   regardless of the inline/legacy styles applied by the child component */
+.history-metallic-header button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f8fafc !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  padding: 7px 14px !important;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.history-metallic-header button:hover {
+  background: rgba(255, 106, 0, 0.18) !important;
+  border-color: rgba(255, 106, 0, 0.4) !important;
+}
+
+.history-card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Generic alignment fixes for whatever table markup renders inside
+   the history card content (works regardless of internal class names) */
+.history-card-content table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.history-card-content thead th {
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px 10px;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8f8f8f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.history-card-content tbody td {
+  text-align: left;
+  vertical-align: top;
+  padding: 14px 10px;
+  font-size: 12.5px;
+  color: #e5e5e5;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* File Name */
+.history-card-content thead th:nth-child(1),
+.history-card-content tbody td:nth-child(1) {
+  width: 18%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Uploaded By */
+.history-card-content thead th:nth-child(2),
+.history-card-content tbody td:nth-child(2) {
+  width: 15%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Date */
+.history-card-content thead th:nth-child(3),
+.history-card-content tbody td:nth-child(3) {
+  width: 13%;
+  white-space: nowrap;
+}
+
+/* Status */
+.history-card-content thead th:nth-child(4),
+.history-card-content tbody td:nth-child(4) {
+  width: 18%;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* Stats */
+.history-card-content thead th:nth-child(5),
+.history-card-content tbody td:nth-child(5) {
+  width: 21%;
+}
+
+/* Actions */
+.history-card-content thead th:nth-child(6),
+.history-card-content tbody td:nth-child(6) {
+  width: 15%;
+  white-space: nowrap;
+}
+
+.history-card-content tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.history-card-content th:last-child,
+.history-card-content td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.history-card-content td button,
+.history-card-content td .badge {
+  vertical-align: middle;
+}
+
+/* ------------------------------------------------------------
+   Shared premium form controls (in case children re-use them)
+   ------------------------------------------------------------ */
+.dashboard-page input,
+.dashboard-page select,
+.dashboard-page textarea {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard-page input:focus,
+.dashboard-page select:focus,
+.dashboard-page textarea:focus {
+  outline: none;
+  border-color: #ff5a1f;
+  box-shadow: 0 0 0 3px rgba(255, 90, 31, 0.15);
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.dashboard-footer {
+  text-align: center;
+  color: rgba(181, 181, 181, 0.6);
+  font-size: 11px;
+  margin-top: 8px;
+  padding-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile Responsiveness Additions */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .launch-editor-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .launch-editor-content {
+    flex: 1 1 auto;
+  }
+  .dashboard-page {
+    padding: 20px 12px 64px;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .dashboard-header-content {
+    align-items: center !important;
+  }
+  .dashboard-header-title-row {
+    flex-wrap: wrap;
+  }
+  .dashboard-admin-badge {
+    white-space: nowrap;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .brand-icon-box {
+    flex-shrink: 0 !important;
+    min-width: 44px !important;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .dashboard-header .dashboard-btn-danger {
+    align-self: center !important;
+    margin-top: 16px;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .dashboard-header-content {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  .dashboard-header-content > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dashboard-header-title-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .dashboard-header-content p {
+    text-align: center !important;
+    max-width: 280px;
+    margin: 8px auto 0 !important;
+  }
+  .dashboard-header .dashboard-btn-danger {
+    margin-top: 24px !important;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+

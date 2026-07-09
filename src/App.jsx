@@ -12,6 +12,9 @@ import TourCard from "./components/TourCard";
 import LazyViewportSection from "./components/LazyViewportSection";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import MobileCTA from "./components/MobileCTA";
+import GoogleOneTap from "./components/GoogleOneTap";
+import useAuth from "./hooks/useAuth";
+import VerifyModal from "./components/VerifyModal";
 
 // Lazy-loaded components below-the-fold
 const importOfferSection = () => import("./components/OfferSection");
@@ -117,8 +120,12 @@ const testimonialsList = [
 ];
 
 export default function App() {
+  const { isAuthenticated } = useAuth();
+
   // Theme State
   const [darkMode, setDarkMode] = useState(false);
+  const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
+  const hasAutoOpenedVerify = useRef(false);
 
   // Search & Category states
   const [searchQuery, setSearchQuery] = useState("");
@@ -144,6 +151,7 @@ export default function App() {
 
   // Auto-open modal tracking
   const hasAutoOpened = useRef(false);
+  const verifyClosed = useRef(false);
 
   // Scroll Spy state
   const isClickScrolling = useRef(false);
@@ -235,17 +243,49 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-open modal after 4 seconds
+  // Auto-open VerifyModal after 2.5 seconds if guest
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!hasAutoOpened.current) {
-        setModalData({ type: "enquiry" });
-        setIsModalOpen(true);
-        hasAutoOpened.current = true;
+      if (!isAuthenticated && !hasAutoOpenedVerify.current) {
+        setIsVerifyModalOpen(true);
+        hasAutoOpenedVerify.current = true;
       }
-    }, 4000);
+    }, 2500);
     return () => clearTimeout(timer);
+  }, [isAuthenticated]);
+
+  // Auto-close VerifyModal and prevent auto-enquiry popup if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsVerifyModalOpen(false);
+      hasAutoOpened.current = true;
+    }
+  }, [isAuthenticated]);
+
+  const handleCloseVerify = useCallback(() => {
+    setIsVerifyModalOpen(false);
+    verifyClosed.current = true;
   }, []);
+
+  // Listen for scroll to open enquiry FormModal at 50% scroll height
+  useEffect(() => {
+    const handleScrollForEnquiry = () => {
+      if (verifyClosed.current && !isAuthenticated && !hasAutoOpened.current && !isModalOpen) {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+        if (scrollPercent >= 50) {
+          setModalData({ type: "enquiry" });
+          setIsModalOpen(true);
+          hasAutoOpened.current = true;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollForEnquiry, { passive: true });
+    return () => window.removeEventListener("scroll", handleScrollForEnquiry);
+  }, [isAuthenticated, isModalOpen]);
 
   // Intersection Observer for Scroll Spy
   useEffect(() => {
@@ -438,6 +478,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <GoogleOneTap />
       {/* Header Navigation */}
       <Header
         currentSection={currentSection}
@@ -620,6 +661,14 @@ export default function App() {
           <Footer onNavigate={handleNavigate} handleOpenGetQuote={handleOpenGetQuote} />
         </Suspense>
       </LazyViewportSection>
+
+      {/* Verification Modal */}
+      {isVerifyModalOpen && (
+        <VerifyModal
+          isOpen={isVerifyModalOpen}
+          onClose={handleCloseVerify}
+        />
+      )}
 
       {/* Booking Form Overlay Modal */}
       {isModalOpen && (

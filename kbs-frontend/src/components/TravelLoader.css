@@ -1,0 +1,198 @@
+.travel-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    background:
+        radial-gradient(120% 90% at 50% 100%, rgba(103, 232, 249, 0.10) 0%, transparent 55%),
+        radial-gradient(140% 100% at 15% 0%, rgba(103, 232, 249, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #060a14 0%, #0b1220 55%, #060a14 100%);
+    will-change: opacity;
+    pointer-events: none;
+}
+
+.travel-loader__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.travel-loader__ghost-path {
+    fill: none;
+    stroke: none;
+}
+
+/* --- contrail: three stacked layers make it read as soft vapor, not a line --- */
+.travel-loader__trail {
+    fill: none;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.travel-loader__trail--outer {
+    stroke: #bfeaf5;
+    stroke-width: 15;
+    opacity: 0.22;
+}
+
+.travel-loader__trail--mid {
+    stroke: #d8f5fb;
+    stroke-width: 7;
+    opacity: 0.4;
+}
+
+.travel-loader__trail--core {
+    stroke-width: 2.4;
+}
+
+.travel-loader__particle {
+    fill: #e0fbff;
+    filter: drop-shadow(0 0 4px rgba(103, 232, 249, 0.9));
+}
+
+.travel-loader__plane {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* --- volumetric background clouds: layered blurred puffs, slow parallax drift --- */
+.travel-loader__clouds {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.travel-loader__cloud {
+    position: absolute;
+    width: 220px;
+    height: 90px;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.travel-loader__cloud-puff {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    filter: blur(26px);
+    background: radial-gradient(circle, rgba(180, 210, 226, 0.4), transparent 70%);
+}
+
+.travel-loader__cloud-puff--2 {
+    width: 65%;
+    height: 65%;
+    top: -18%;
+    left: 18%;
+    filter: blur(20px);
+}
+
+.travel-loader__cloud-puff--3 {
+    width: 55%;
+    height: 55%;
+    top: 20%;
+    left: -10%;
+    filter: blur(22px);
+}
+
+.travel-loader__cloud--a {
+    width: 300px;
+    height: 110px;
+    top: 22%;
+    left: 6%;
+}
+
+.travel-loader__cloud--b {
+    width: 220px;
+    height: 90px;
+    top: 58%;
+    left: 62%;
+}
+
+.travel-loader__cloud--c {
+    width: 190px;
+    height: 80px;
+    top: 10%;
+    left: 70%;
+}
+
+/* foreground cloud: sits ABOVE the svg layer so the aircraft passes behind it */
+.travel-loader__cloud-foreground {
+    position: absolute;
+    z-index: 3;
+    width: 260px;
+    height: 120px;
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.travel-loader__cloud-foreground .travel-loader__cloud-puff {
+    background: radial-gradient(circle, rgba(210, 232, 240, 0.55), transparent 72%);
+    filter: blur(18px);
+}
+
+.travel-loader__wordmark {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    pointer-events: none;
+}
+
+.travel-loader__logo {
+    margin: 0;
+    font-family: var(--font-heading, "Inter", system-ui, sans-serif);
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    letter-spacing: 0.04em;
+    background: linear-gradient(90deg, #ffffff 0%, #cdf5fb 45%, #67e8f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    will-change: opacity, transform;
+}
+
+.travel-loader__tagline {
+    margin: 10px 0 0;
+    font-family: var(--font-heading, "Inter", system-ui, sans-serif);
+    font-weight: 500;
+    font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #9fd7e3;
+    will-change: opacity, transform;
+}
+
+@media (max-width: 640px) {
+    .travel-loader__cloud--a {
+        width: 190px;
+        height: 70px;
+    }
+
+    .travel-loader__cloud--b {
+        width: 150px;
+        height: 60px;
+    }
+
+    .travel-loader__cloud--c {
+        width: 140px;
+        height: 56px;
+    }
+
+    .travel-loader__cloud-foreground {
+        width: 190px;
+        height: 90px;
+    }
+
+    .travel-loader__tagline {
+        letter-spacing: 0.22em;
+    }
+}

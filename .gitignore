@@ -1,24 +1,34 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Node.js
+kbs-frontend/node_modules/
+kbs-frontend/dist/
+kbs-frontend/dist-ssr/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Python
+__pycache__/
+*/__pycache__/
+*.pyc
+.venv/
+venv/
+venv_broken/
+kbs-backend/venv/
+kbs-backend/venv_broken/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+# Environment files
+.env
+.env.*
+.env.local
+kbs-frontend/.env
+kbs-frontend/.env.local
+kbs-backend/.env
+
+# IDE
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# OS files
+.DS_Store
